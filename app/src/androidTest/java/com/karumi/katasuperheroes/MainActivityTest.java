@@ -23,6 +23,7 @@ import android.test.suitebuilder.annotation.LargeTest;
 
 import com.karumi.katasuperheroes.di.MainComponent;
 import com.karumi.katasuperheroes.di.MainModule;
+import com.karumi.katasuperheroes.matchers.RecyclerViewItemsCountMatcher;
 import com.karumi.katasuperheroes.model.SuperHero;
 import com.karumi.katasuperheroes.model.SuperHeroesRepository;
 import com.karumi.katasuperheroes.ui.view.MainActivity;
@@ -41,6 +42,7 @@ import it.cosenonjaviste.daggermock.DaggerMockRule;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.not;
 import static org.mockito.Mockito.when;
@@ -80,17 +82,27 @@ import static org.mockito.Mockito.when;
 
     onView(withText("¯\\_(ツ)_/¯")).check(matches(not(isDisplayed())));
   }
+
+  @Test public void numberOfSuperHeros(){
+    givenThereAreSuperHeroes(10,false);
+
+    startActivity();
+
+    onView(withId(R.id.recycler_view)).check(matches(RecyclerViewItemsCountMatcher.recyclerViewHasItemCount(10)));
+  }
+
+
   private void givenThereAreNoSuperHeroes() {
     when(repository.getAll()).thenReturn(Collections.<SuperHero>emptyList());
   }
 
   private void givenThereAreSuperHeroes(int nuOfSuperHeroes, boolean averanges){
-    List<SuperHero> heroes = new ArrayList<SuperHero>();
+    List<SuperHero> heroes = new ArrayList<>();
 
     for (int i = 0; i < nuOfSuperHeroes; i++) {
 
-      String name = "SuperHero "+i;
-      String photo = "Photo "+i;
+      String name = "SuperHero " + i;
+      String photo = "Photo " + i;
       boolean isAvenger = true;
       String description = "Description";
       SuperHero hero = new SuperHero(name,photo,isAvenger,description);

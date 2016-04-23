@@ -32,7 +32,7 @@ import butterknife.Bind;
 
 public class SuperHeroDetailActivity extends BaseActivity implements SuperHeroDetailPresenter.View {
 
-  private static final String SUPER_HERO_NAME_KEY = "super_hero_name_key";
+  public static final String SUPER_HERO_NAME_KEY = "super_hero_name_key";
 
   @Inject SuperHeroDetailPresenter presenter;
 

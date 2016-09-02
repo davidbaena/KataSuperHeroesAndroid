@@ -1,4 +1,4 @@
-language: android
+wlanguage: android
 env:
   global:
     - ADB_INSTALL_TIMEOUT=8 # 8 minutes (2 minutes by default)
